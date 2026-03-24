@@ -1,0 +1,40 @@
+{% extends "../userauth/partials/base.html" %}
+{% load static %}
+
+
+{% block content %}
+<section class="pt-5 pb-5">
+            <div class="container">
+                <div class="row mt-0 mt-md-4">
+                    <div class="col-lg-3 col-md-4 col-12">
+                        {% include 'patient/patient-menu.html' %}
+                    </div>
+
+                    <div class="col-lg-9 col-md-8 col-12">
+                        <h4 class="mb-0 mb-4 fw-bold">Prescription</h4>
+                        {% for prescription in prescriptions %}
+                        <div class="card mb-4 mt-2">
+                            <div class="shadow border p-3 mb-4 rounded-4">
+                                <p>
+                                    <a class="" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <p><span class="fw-semibold text-dark">Doctor:</span> {{prescription.appointment.doctor}}</p>
+                                        <p><span class="fw-semibold text-dark">Medications:</span> {{prescription.medications}}</p>
+                                        <p><span class="fw-semibold text-dark">Issue Date:</span> {{prescription.appointment.appointment_date}}</p>
+                                    </a>
+                                    <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample"> Show more <i class="fas fa-arrow-down ms-2"></i> </a>
+                                </p>
+                                <div class="collapse" id="collapseExample1">
+                                    <div>
+                                        <p><span class="fw-semibold text-dark">Appointment ID:</span> {{prescription.appointment.appointment_id}}</p>
+                                        {% comment %} <p><span class="fw-semibold text-dark">Medical Record ID : {{medical_redord.id}}</span></p>
+                                        <p><span class="fw-semibold text-dark">Lab Test :</span> {{labtest.id}}</p> {% endcomment %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}

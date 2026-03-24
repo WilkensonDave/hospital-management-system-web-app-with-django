@@ -1,0 +1,42 @@
+{% extends "../userauth/partials/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="pt-5 pb-5">
+    <div class="container">
+        <div class="row mt-0 mt-md-4">
+            <div class="col-lg-3 col-md-4 col-12">
+                {% include 'patient/patient-menu.html' %}
+            </div>
+
+            <div class="col-lg-9 col-md-8 col-12">
+                {% if medical_reports %}
+                <h4 class="mb-0 mb-4 fw-bold">Medical Reports</h4>
+                {% else %}
+                <h4 class="mb-0 mb-4 fw-bold">You don't have any medical report at the moment.</h4>
+                {% endif %}
+                <div class="card mb-4 mt-2">
+                    {% for record in medical_reports %}
+                    <div class="shadow border p-3 mb-4 rounded-4">
+                        <p>
+                            <a class="" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <p><span class="fw-semibold text-dark">Record ID:</span> {{record.id}}</p>
+                                <p><span class="fw-semibold text-dark">Doctor:</span>{{record.appointment.doctor}}</p>
+                                <p><span class="fw-semibold text-dark">Record Date:</span>{{record.appointment.appointment_date}}</p>
+                            </a>
+                            <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample"> Show more <i class="fas fa-arrow-down ms-2"></i> </a>
+                        </p>
+                        <div class="collapse" id="collapseExample1">
+                            <div>
+                                <p><span class="fw-semibold text-dark">Diagonises:</span> {{record.diagnosis}}</p>
+                                <p><span class="fw-semibold text-dark">Prescription:</span>{{record.treatment}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "../userauth/partials/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="pt-5 pb-5">
+            <div class="container">
+                <div class="row mt-0 mt-md-4">
+                    <div class="col-lg-3 col-md-4 col-12">
+                        {% include 'patient/patient-menu.html' %}
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-12">
+                        {% if lab_tests %}
+                        <h4 class="mb-0 mb-4 fw-bold">Lab Test</h4>
+                        {% else %}
+                        <h4 class="mb-0 mb-4 fw-bold">You don't have any lab test available now.</h4>
+                        {% endif %}
+                        <div class="card mb-4 mt-2">
+                            {% for test in lab_tests %}
+                            <div class="shadow border p-3 mb-4 rounded-4">
+                                <p>
+                                    <a class="" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        <p><span class="fw-semibold text-dark">Test ID:</span> {{test.id}}</p>
+                                        <p><span class="fw-semibold text-dark">Doctor:</span> {{test.appointment.doctor}}</p>
+                                        <p><span class="fw-semibold text-dark">Test Name:</span> {{test.test_name}}</p>
+                                        <p><span class="fw-semibold text-dark">Test Date:</span> {{test.appointment.appointment_date}}</p>
+                                        <p><span class="fw-semibold text-dark">Status:</span> {{test.appointment.status}}</p>
+                                    </a>
+                                    <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample"> Show more <i class="fas fa-arrow-down ms-2"></i> </a>
+                                </p>
+                                <div class="collapse" id="collapseExample2">
+                                    <div>
+                                        <p><span class="fw-semibold text-dark">Description:</span>{{test.description}}</p>
+                                        <p><span class="fw-semibold text-dark">Result:</span> {{test.result}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}

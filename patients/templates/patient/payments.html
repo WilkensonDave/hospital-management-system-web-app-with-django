@@ -1,0 +1,47 @@
+{% extends "../userauth/partials/base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="pt-5 pb-5">
+    <div class="container">
+        <div class="row mt-0 mt-md-4">
+            {% include "patient/sidebar.html" %}
+
+            <div class="col-lg-9 col-md-8 col-12">
+                <h4 class="mb-0 mb-4 fw-bold">Payments</h4>
+                <div class="card mb-4 mt-5">
+                    <div class="table-responsive overflow-y-hidden">
+                        <table class="table mb-0 text-nowrap table-hover table-centered text-nowrap">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Payment ID</th>
+                                    <th>Appointment ID</th>
+                                    <th>Patients</th>
+                                    <th>Service</th>
+                                    <th>Amount</th>
+                                    <th>VAT</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for payment in payments %}
+                                <tr>
+                                    <td>{{payment.billing_id}}</td>
+                                    <td>{{payment.appointment.appointment_id}}</td>
+                                    <td>{{payment.patient}}</td>
+                                    <td>{{payment.appointment.service}}</td>
+                                    <td>${{payment.sub_total}}</td>
+                                    <td>${{payment.tax}}</td>
+                                    <td>{{payment.status}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

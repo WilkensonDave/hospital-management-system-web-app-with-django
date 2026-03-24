@@ -1,0 +1,112 @@
+{% extends "../userauth/partials/base.html" %}
+
+{% load static %}
+
+{% block content %}
+<section class="pt-5 pb-5">
+    <div class="container">
+        <div class="row mt-0 mt-md-4">
+            {% include "patient/sidebar.html" %}
+            <div class="col-lg-9 col-md-8 col-12">
+                <div class="row mb-4">
+                    <h4 class="mb-0 mb-4 fw-bold">Dashboard</h4>
+                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
+                        <div class="d-flex justify-content-center align-items-center p-4 bg-danger bg-opacity-10 rounded-3">
+                            <span class="display-6 lh-1 text-purple mb-0">
+                                <i class="fas fa-calendar text-danger"></i>
+                            </span>
+                            <div class="ms-4">
+                                <div class="d-flex">
+                                    <h5 class="mb-0 fw-bold">{{appointments.count}}</h5>
+                                </div>
+                                {% if appointments.count > 1 %}
+                                <p class="mb-0 h6 fw-semibold">Appointments</p>
+                                {% else %}
+                                <p class="mb-0 h6 fw-semibold">Appointment</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
+                        <div class="d-flex justify-content-center align-items-center p-4 bg-dark bg-opacity-10 rounded-3">
+                            <span class="display-6 lh-1 text-dark mb-0">
+                                <i class="fas fa-bell"></i>
+                            </span>
+                            <div class="ms-4">
+                                <div class="d-flex">
+                                    <h5 class="mb-0 fw-bold">{{notifications.count}}</h5>
+                                </div>
+                                {% if notifications.count > 1 %}
+                                <p class="mb-0 h6 fw-semibold">Notifications</p>
+                                {% else %}
+                                <p class="mb-0 h6 fw-semibold">Notification</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
+                        <div class="d-flex justify-content-center align-items-center p-4 bg-success bg-opacity-10 rounded-3">
+                            <span class="display-6 lh-1 text-success mb-0">
+                                <i class="fas fa-medal"></i>
+                            </span>
+                            <div class="ms-4">
+                                <div class="d-flex">
+                                    {% if total_spent%}
+                                    <h5 class="mb-0 fw-bold">${{total_spent}}</h5>
+                                    {% else %}
+                                    <h5 class="mb-0 fw-bold">$0</h5>
+                                    {% endif %}
+                                </div>
+                                <p class="mb-0 h6 fw-semibold">Amount Spent</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4 mt-5">
+                    <div class="table-responsive overflow-y-hidden">
+                        <table class="table mb-0 text-nowrap table-hover table-centered text-nowrap">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Appointment ID</th>
+                                    <th>Que Number</th>
+                                    <th>Doctor</th>
+                                    <th>Issue</th>
+                                    <th>Date</th>
+                                    <th>status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appointment in appointments %}
+                                <tr>
+                                    <td>{{appointment.appointment_id}}</td>
+                                    <td>{{appointment.id}}</td>
+                                    <td>{{appointment.doctor}}</td>
+                                    <td>{{appointment.issues}}</td>
+                                    <td>{{appointment.appointment_date}}</td>
+                                    <td>{{appointment.status}}</td>
+                                    <td>
+                                    {% if appointment.status != "completed" and appointment.status != "cancelled"  %}
+                                    <a href="{% url 'cancel_appointment' appointment.appointment_id %}" class="btn btn-outline-danger btn-sm">Cancel Appointment <i class="fas fa-trash ms-2"></i></a>
+                                    {% endif %}
+
+                                    {% if appointment.status == "cancelled" %}
+                                    <a href="{% url 'activate_appointment' appointment.appointment_id %}" class="btn btn-outline-success btn-sm">Activate Appointment 
+                                        <i class="fas fa-check-circle ms-2"></i>
+                                    </a>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
